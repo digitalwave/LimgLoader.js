@@ -7,35 +7,34 @@ LimgLoader()
 ------------
 Example:
 
-var img = 'http://www.jpl.nasa.gov/images/earth/earth2-browse.jpg?v=';
-var cachefix = +(new Date()); 
+    var img = 'http://www.jpl.nasa.gov/images/earth/earth2-browse.jpg?v=';
+    var cachefix = +(new Date()); 
+    
+    var loader = LimgLoader({ connection_limit: 1 });
+    
+    var mydata = { baz: 1 };
+    
+    loader.onStateChange(function (e, queue_length, data) {
+        console.log(
+            e.type + ' | ' + this.state + ' | ' + this.src,
+            e.type === 'statechange',
+            this.data === mydata,
+            this.state, // === "loaded || error || timeout"
+            this.src !== "foobar.jpg",
+            data.baz === mydata.baz
+        );
+    }).onBeforeLoad(function (e, queue_length, data) {
+        console.log(
+            e.type === 'beforeload',
+            e.type,
+            this.state,
+            this.src
+        );
+    });
 
-var loader = LimgLoader({ connection_limit: 1 });
-
-var mydata = { baz: 1 };
-
-loader.onStateChange(function (e, queue_length, data) {
-    console.log(
-        e.type + ' | ' + this.state + ' | ' + this.src,
-        e.type === 'statechange',
-        this.data === mydata,
-        this.state, // === "loaded || error || timeout"
-        this.src !== "foobar.jpg",
-        data.baz === mydata.baz
-    );
-}).onBeforeLoad(function (e, queue_length, data) {
-    console.log(
-        e.type === 'beforeload',
-        e.type,
-        this.state,
-        this.src
-    );
-});
-
-
-loader.add(img + '_A__' + (++cachefix), mydata); // returns LimgLoaderPic
-loader.add(img + '_B__' + (++cachefix), mydata);
-loader.add(img + '_C__' + (++cachefix), mydata);
+    loader.add(img + '_A__' + (++cachefix), mydata); // returns LimgLoaderPic
+    loader.add(img + '_B__' + (++cachefix), mydata);
+    loader.add(img + '_C__' + (++cachefix), mydata);
 
 
 LimgLoaderPic()
