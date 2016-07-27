@@ -158,8 +158,8 @@
                 return function() {
                     var img = this.$img[0], src = this.src;
                     img.src = '';
+                    img.src = src;
                     window.setTimeout(function() { // IE8
-                        img.src = src;
                         if (img.complete || typeof img.complete === "undefined") {
                             img.src = lpxgif;
                             img.src = src;
